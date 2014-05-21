@@ -1,0 +1,111 @@
+/*
+Theme Name: Bounce
+Theme URI: http://wordpress.org/themes/bounce
+Author: Adaptation of twenty foutien, Adding bootstrap responsiveness ness
+Author URI: http://thatguy.co.za/
+Description: Attempting to integrate Bootstrap 3 from Twitter into WP
+Version: 1.1
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Tags: black, green, white, light, dark, two-columns, three-columns, left-sidebar, right-sidebar, fixed-layout, responsive-layout, custom-background, custom-header, custom-menu, editor-style, featured-images, flexible-header, full-width-template, microformats, post-formats, rtl-language-support, sticky-post, theme-options, translation-ready, accessibility-ready
+Text Domain: bounce
+
+This theme, like WordPress, is licensed under the GPL.
+Use it to make something cool, have fun, and share what you've learned with others.
+*/
+
+/**
+ * Table of Contents:
+ *
+ * 1.0 - Reset
+ * 2.0 - Repeatable Patterns
+ * 3.0 - Basic Structure
+ * 4.0 - Header
+ * 5.0 - Navigation
+ * 6.0 - Content
+ *   6.1 - Post Thumbnail
+ *   6.2 - Entry Header
+ *   6.3 - Entry Meta
+ *   6.4 - Entry Content
+ *   6.5 - Galleries
+ *   6.6 - Post Formats
+ *   6.7 - Post/Image/Paging Navigation
+ *   6.8 - Attachments
+ *   6.9 - Archives
+ *   6.10 - Contributor Page
+ *   6.11 - 404 Page
+ *   6.12 - Full-width
+ *   6.13 - Singular
+ *   6.14 - Comments
+ * 7.0 - Sidebar
+ *   7.1 - Widgets
+ *   7.2 - Content Sidebar Widgets
+ * 8.0 - Footer
+ * 9.0 - Featured Content
+ * 10.0 - Multisite
+ * 11.0 - Media Queries
+ * 12.0 - Print
+ * -----------------------------------------------------------------------------
+ */
+
+
+/**
+ * 1.0 Reset
+ *
+ * Resetting and rebuilding styles have been helped along thanks to the fine
+ * work of Eric Meyer http://meyerweb.com/eric/tools/css/reset/index.html
+ * along with Nicolas Gallagher and Jonathan Neal
+ * http://necolas.github.com/normalize.css/ and Blueprint
+ * http://www.blueprintcss.org/
+ *
+ * -----------------------------------------------------------------------------
+ */
+
+html,
+body {
+	font-family: 'Play', sans-serif;
+}
+
+ body {
+ 	background: #e3e8ed;
+ }
+
+
+#page {
+	margin-top: 20px;
+	margin-bottom: 20px;
+	padding: 10px;
+	padding-right: 50px;
+	background: white;
+	border: 1px solid #cccccc;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	-webkit-box-shadow: 1px 5px 9px 0px rgba(50, 50, 50, 0.57);
+	-moz-box-shadow:    1px 5px 9px 0px rgba(50, 50, 50, 0.57);
+	box-shadow:         1px 5px 9px 0px rgba(50, 50, 50, 0.57);
+}
+
+@media screen and (max-width: 950px) {
+	#page {
+		margin-left: 10px;
+		margin-right: 10px;
+	}
+}
+
+.search-box {
+	margin-left: 3px;
+}
+
+
+#logo > a {
+	color: #333;
+	font-size: 50px;
+	text-decoration: none;
+}
+
+.navbar {
+	margin-right: 20px;
+	overflow: hidden;
+	padding-left: 10px; padding-right: 10px;
+}
