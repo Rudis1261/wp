@@ -539,6 +539,14 @@ function special_nav_class($classes, $item){
 	return $classes;
 }
 
+# Add the bootstrap classes
+function custom_edit_post_link($output) {
+    $output = str_replace('class="post-edit-link', 'class="post-edit-link btn btn-primary', $output);
+    $output = str_replace('</a>', '&nbsp;&nbsp;<i class="glyphicon glyphicon-pencil"></i></a>', $output);
+    return $output;
+}
+add_filter('edit_post_link', 'custom_edit_post_link');
+
 
 # Custom functions required
 # This is a little hack job to make the bootstrap icons prettier

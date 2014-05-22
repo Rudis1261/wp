@@ -43,7 +43,7 @@
 	<?php endif; ?>
 
 	<!-- Description of the site -->
-	<div class="container">
+	<div class="container-fluid">
 		<h1 id="logo">
 			<a class="unstyled" href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a>
 			<small>[<?php bloginfo( 'description' ); ?>]</small>
@@ -51,7 +51,7 @@
 	</div>
 
 	<!-- The normal large screen display -->
-	<div class="container hidden-sm hidden-xs">
+	<div class="container-fluid hidden-sm hidden-xs">
 		<center>
 			<?php
 				$defaults = array(
@@ -69,7 +69,7 @@
 	</div>
 
 	<!-- The small screen menu version -->
-	<div class="container hidden-lg hidden-md">
+	<div class="container-fluid hidden-lg hidden-md">
 		<center>
 			<?php
 				$defaults =  array(
@@ -87,5 +87,5 @@
 	</div>
 
 	<!-- Where the body begins -->
-	<div id="main" class="container">
+	<div id="main" class="container-fluid">
 		<hr class="visible-sm visible-xs" />
