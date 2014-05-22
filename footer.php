@@ -9,20 +9,19 @@
  * @since Twenty Fourteen 1.0
  */
 ?>
-
 		</div><!-- #main -->
 
 		<footer id="colophon" class="site-footer" role="contentinfo">
 
 			<?php get_sidebar( 'footer' ); ?>
 
-			<div class="site-info">
-				<?php do_action( 'twentyfourteen_credits' ); ?>
-				<a href="<?php echo esc_url( __( 'http://wordpress.org/', 'twentyfourteen' ) ); ?>"><?php printf( __( 'Proudly powered by %s', 'twentyfourteen' ), 'WordPress' ); ?></a>
-			</div><!-- .site-info -->
 		</footer><!-- #colophon -->
 	</div><!-- #page -->
 	<?php wp_footer(); ?>
-	<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+	<script async src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+	<script async src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+	<script async src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+	<script async src="<?php echo get_stylesheet_directory_uri() . '/js/jquery.lazyload.min.js'; ?>"></script>
+	<script async src="<?php echo get_stylesheet_directory_uri() . '/js/custom.js'; ?>"></script>
 </body>
 </html>

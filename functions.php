@@ -245,7 +245,7 @@ function twentyfourteen_scripts() {
 		wp_enqueue_script( 'twentyfourteen-keyboard-image-navigation', get_template_directory_uri() . '/js/keyboard-image-navigation.js', array( 'jquery' ), '20130402' );
 	}
 
-	if ( is_active_sidebar( 'sidebar-3' ) ) {
+	/*if ( is_active_sidebar( 'sidebar-3' ) ) {
 		wp_enqueue_script( 'jquery-masonry' );
 	}
 
@@ -255,7 +255,7 @@ function twentyfourteen_scripts() {
 			'prevText' => __( 'Previous', 'twentyfourteen' ),
 			'nextText' => __( 'Next', 'twentyfourteen' )
 		) );
-	}
+	}*/
 
 	wp_enqueue_script( 'twentyfourteen-script', get_template_directory_uri() . '/js/functions.js', array( 'jquery' ), '20140319', true );
 }

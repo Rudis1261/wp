@@ -59,6 +59,7 @@
 					'after'       => '</div>',
 					'link_before' => '',
 					'link_after'  => '',
+					'class'		  => 'lazy'
 				) );
 			?>
 		</div><!-- .entry-content -->
@@ -66,24 +67,44 @@
 	<!-- On the post listing -->
 	<?php else : ?>
 
-	<?php
-		$gallery 	= get_post_gallery_images( $post );
-		$image 		= false;
+		<?php
+			$gallery 	= get_post_gallery_images( $post );
+			$image 		= false;
+			$text 		= substr( strip_tags( get_the_excerpt() ),0,235);
 
-		# Has a featured image
-		if (has_post_thumbnail($post->ID)) {
-			$image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'single-post-thumbnail' );
-		}
+			# Has a featured image
+			if (has_post_thumbnail($post->ID)) {
+				$image 		= wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'medium' );
+				$image 		= $image[0];
+				$get_size 	= getimagesize($image);
+				$width 		= $get_size[0];
+				$height 	= $get_size[1];
+			}
 
-		# Check that the image is empty and the gallery it not
-		if (!empty($gallery) AND empty($image)) {
-			$image = $gallery;
-			array_rand($image);
-		}
-	?>
+			# Check that the image is empty and the gallery it not
+			if (!empty($gallery) AND empty($image)) {
+				$image 		= $gallery;
+				array_rand($image);
+				$image 		= $image[0];
+				$get_size 	= getimagesize($image);
+				$width 		= $get_size[0];
+				$height 	= $get_size[1];
+			}
+		?>
 
 		<div id="container-fluid">
-			<img class="img-thumbnail img-responsive" src="<?php echo $image[0]; ?>" alt="Featured image" ?>
+			<div class="pull-left">
+				<img class="img-thumbnail img-responsive lazy" width="<?php echo $width; ?>" height="<?php echo $height; ?>" data-original="<?php echo $image; ?>" alt="Featured image">
+			</div>
+			<div class="pull-left post-content">
+				<p>
+					<?php
+						$first_word = strtok($text, " ");
+					 	echo str_replace($first_word, "<span class='post-first-word'>" . $first_word . "</span>", $text);
+					?>
+				</p>
+			</div>
+			<div class="clearfix"></div>
 		</div>
 
 
