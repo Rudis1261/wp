@@ -18,13 +18,13 @@
 
 get_header(); ?>
 
-	<section id="primary" class="content-area">
-		<div id="content" class="site-content" role="main">
+	<section id="primary">
+		<div id="content" class="container-fluid" role="main">
 
 			<?php if ( have_posts() ) : ?>
 
 			<header class="archive-header">
-				<h1 class="archive-title">
+				<h2 class="archive-title">
 					<?php
 						if ( is_tax( 'post_format', 'post-format-aside' ) ) :
 							_e( 'Asides', 'twentyfourteen' );
@@ -52,7 +52,7 @@ get_header(); ?>
 
 						endif;
 					?>
-				</h1>
+				</h2>
 			</header><!-- .archive-header -->
 
 			<?php

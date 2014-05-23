@@ -42,18 +42,28 @@ function twentyfourteen_paging_nav() {
 		'current'  => $paged,
 		'mid_size' => 1,
 		'add_args' => array_map( 'urlencode', $query_args ),
-		'prev_text' => __( '&larr; Previous', 'twentyfourteen' ),
-		'next_text' => __( 'Next &rarr;', 'twentyfourteen' ),
+		'prev_text' => __( icon("chevron-left", false, "Previous Page"), 'twentyfourteen' ),
+		'next_text' => __( icon("chevron-right", false, "Next Page"), 'twentyfourteen' )
 	) );
 
 	if ( $links ) :
 
+		$lines = explode("\n", $links);
+		$links = "";
+		foreach($lines as $line)
+		{
+			$active 	= stristr($line, 'dots') ? "" : " class='active' ";
+			$find 		= array("<a", "<span", "</a>", "</span>");
+			$replace 	= array("<li><a", "<li" . $active . "><span", "</a></li>", "</span></li>");
+			$links .= str_replace($find, $replace, $line) . PHP_EOL;
+		}
+
 	?>
 	<nav class="navigation paging-navigation" role="navigation">
-		<h1 class="screen-reader-text"><?php _e( 'Posts navigation', 'twentyfourteen' ); ?></h1>
-		<div class="pagination loop-pagination">
+		<h2 class="screen-reader-text"><?php _e( 'Posts navigation', 'twentyfourteen' ); ?></h2>
+		<ul class="pagination pagination-lg">
 			<?php echo $links; ?>
-		</div><!-- .pagination -->
+		</ul><!-- .pagination -->
 	</nav><!-- .navigation -->
 	<?php
 	endif;
@@ -77,14 +87,14 @@ function twentyfourteen_post_nav() {
 
 	?>
 	<nav class="navigation post-navigation" role="navigation">
-		<h1 class="screen-reader-text"><?php _e( 'Post navigation', 'twentyfourteen' ); ?></h1>
-		<div class="nav-links">
+		<h2 class="screen-reader-text"><?php _e( 'Post navigation', 'twentyfourteen' ); ?></h2>
+		<div class="container-fluid">
 			<?php
 			if ( is_attachment() ) :
 				previous_post_link( '%link', __( '<span class="meta-nav">Published In</span>%title', 'twentyfourteen' ) );
 			else :
-				previous_post_link( '%link', __( '<span class="meta-nav">Previous Post</span>%title', 'twentyfourteen' ) );
-				next_post_link( '%link', __( '<span class="meta-nav">Next Post</span>%title', 'twentyfourteen' ) );
+				previous_post_link( '%link', __( '<span class="pull-left btn btn-default btn-large">' . icon("chevron-left") . ' Previous Post <i>[%title]</i></span>', 'twentyfourteen' ) );
+				next_post_link( '%link', __( '<span class="pull-right btn btn-default btn-large"><i>[%title]</i> Next Post ' . icon("chevron-right") . '</span>', 'twentyfourteen' ) );
 			endif;
 			?>
 		</div><!-- .nav-links -->
