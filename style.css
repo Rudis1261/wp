@@ -48,6 +48,7 @@ body {
 	-webkit-box-shadow: 1px 5px 9px 0px rgba(50, 50, 50, 0.57);
 	-moz-box-shadow:    1px 5px 9px 0px rgba(50, 50, 50, 0.57);
 	box-shadow:         1px 5px 9px 0px rgba(50, 50, 50, 0.57);
+	overflow: hidden;
 }
 
 @media screen and (max-width: 950px) {

@@ -224,17 +224,22 @@ function twentyfourteen_font_url() {
  * @since Twenty Fourteen 1.0
  */
 function twentyfourteen_scripts() {
-	// Add Lato font, used in the main stylesheet.
-	wp_enqueue_style( 'twentyfourteen-lato', twentyfourteen_font_url(), array(), null );
 
 	// Add Genericons font, used in the main stylesheet.
-	wp_enqueue_style( 'genericons', get_template_directory_uri() . '/genericons/genericons.css', array(), '3.0.2' );
+	//wp_enqueue_style( 'genericons', get_template_directory_uri() . '/genericons/genericons.css', array(), '3.0.2' );
+
+	// Load Bootsrap
+	// wp_enqueue_style( $handle, $src, $deps, $ver, $media );
+	wp_enqueue_style( 'bootstrap-v3', "//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css", array(), '3.1.1' );
+
+	// Load the google fonts
+	wp_enqueue_style( 'google-fonts-play', "//fonts.googleapis.com/css?family=Play");
 
 	// Load our main stylesheet.
-	wp_enqueue_style( 'twentyfourteen-style', get_stylesheet_uri(), array( 'genericons' ) );
+	wp_enqueue_style( 'twentyfourteen-style', get_stylesheet_uri());
 
 	// Load the Internet Explorer specific stylesheet.
-	wp_enqueue_style( 'twentyfourteen-ie', get_template_directory_uri() . '/css/ie.css', array( 'twentyfourteen-style', 'genericons' ), '20131205' );
+	wp_enqueue_style( 'twentyfourteen-ie', get_template_directory_uri() . '/css/ie.css', array( 'twentyfourteen-style' ), '20131205' );
 	wp_style_add_data( 'twentyfourteen-ie', 'conditional', 'lt IE 9' );
 
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
@@ -245,31 +250,14 @@ function twentyfourteen_scripts() {
 		wp_enqueue_script( 'twentyfourteen-keyboard-image-navigation', get_template_directory_uri() . '/js/keyboard-image-navigation.js', array( 'jquery' ), '20130402' );
 	}
 
-	/*if ( is_active_sidebar( 'sidebar-3' ) ) {
-		wp_enqueue_script( 'jquery-masonry' );
-	}
-
-	if ( is_front_page() && 'slider' == get_theme_mod( 'featured_content_layout' ) ) {
-		wp_enqueue_script( 'twentyfourteen-slider', get_template_directory_uri() . '/js/slider.js', array( 'jquery' ), '20131205', true );
-		wp_localize_script( 'twentyfourteen-slider', 'featuredSliderDefaults', array(
-			'prevText' => __( 'Previous', 'twentyfourteen' ),
-			'nextText' => __( 'Next', 'twentyfourteen' )
-		) );
-	}*/
-
+	//wp_enqueue_script( $handle, $src, $deps, $ver, $in_footer );
+	wp_enqueue_script( 'bootstrap', "//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js", array( 'jquery' ), '20140522', true );
+	wp_enqueue_script( 'lazyloadimg', get_template_directory_uri() . '/js/jquery.lazyload.min.js', array( 'jquery' ), '20140522', true );
 	wp_enqueue_script( 'twentyfourteen-script', get_template_directory_uri() . '/js/functions.js', array( 'jquery' ), '20140319', true );
+
 }
 add_action( 'wp_enqueue_scripts', 'twentyfourteen_scripts' );
 
-/**
- * Enqueue Google fonts style to admin screen for custom header display.
- *
- * @since Twenty Fourteen 1.0
- */
-function twentyfourteen_admin_fonts() {
-	wp_enqueue_style( 'twentyfourteen-lato', twentyfourteen_font_url(), array(), null );
-}
-add_action( 'admin_print_scripts-appearance_page_custom-header', 'twentyfourteen_admin_fonts' );
 
 if ( ! function_exists( 'twentyfourteen_the_attached_image' ) ) :
 /**
@@ -539,13 +527,74 @@ function special_nav_class($classes, $item){
 	return $classes;
 }
 
+
+add_filter('post_gallery', 'my_post_gallery', 10, 2);
+function my_post_gallery($output, $attr) {
+    global $post;
+
+    if (isset($attr['orderby'])) {
+        $attr['orderby'] = sanitize_sql_orderby($attr['orderby']);
+        if (!$attr['orderby']) {
+            unset($attr['orderby']);
+        }
+    }
+
+    extract(shortcode_atts(array(
+        'order' 		=> 'ASC',
+        'orderby' 		=> 'menu_order ID',
+        'id' 			=> $post->ID,
+        'itemtag' 		=> 'dl',
+        'icontag'	 	=> 'dt',
+        'captiontag' 	=> 'dd',
+        'columns' 		=> 3,
+        'size' 			=> 'medium',
+        'include' 		=> '',
+        'exclude' 		=> ''
+    ), $attr));
+
+    $id = intval($id);
+    if ('RAND' == $order) $orderby = 'none';
+
+    if (!empty($include)) {
+        $include = preg_replace('/[^0-9,]+/', '', $include);
+        $_attachments = get_posts(array('include' => $include, 'post_status' => 'inherit', 'post_type' => 'attachment', 'post_mime_type' => 'image', 'order' => $order, 'orderby' => $orderby));
+
+        $attachments = array();
+        foreach ($_attachments as $key => $val) {
+            $attachments[$val->ID] = $_attachments[$key];
+        }
+    }
+
+    if (empty($attachments)) return '';
+
+    // Here's your actual output, you may customize it to your need
+    $output = "<div class=\"row\">\n";
+
+    // Now you loop through each attachment
+    foreach ($attachments as $id => $attachment) {
+        // Fetch the thumbnail (or full image, it's up to you)
+      	//$img = wp_get_attachment_image_src($id, 'medium');
+      	$img = wp_get_attachment_image_src($id, 'thumbnail');
+		//$img = wp_get_attachment_image_src($id, 'my-custom-image-size');
+        //$img = wp_get_attachment_image_src($id, 'full');
+
+    	$output .= "<div style=\"margin-bottom: 25px;\" class=\"pull-left col-lg-3 col-md-3 col-sm-4 col-xs-6\">\n";
+        $output .= "<img class=\"lazy img-thumbnail img-responsive\" data-original=\"{$img[0]}\" width=\"{$img[1]}\" height=\"{$img[2]}\" alt=\"Loading\" />\n";
+        $output .= "</div>\n";
+    }
+
+    $output .= "</div>\n";
+    return $output;
+}
+
+
 # Add the bootstrap classes
+add_filter('edit_post_link', 'custom_edit_post_link');
 function custom_edit_post_link($output) {
     $output = str_replace('class="post-edit-link', 'class="post-edit-link btn btn-primary', $output);
     $output = str_replace('</a>', '&nbsp;&nbsp;<i class="glyphicon glyphicon-pencil"></i></a>', $output);
     return $output;
 }
-add_filter('edit_post_link', 'custom_edit_post_link');
 
 
 # Custom functions required
